@@ -39,22 +39,39 @@ module RuboCop
       #   good_foo_method(args)
       #
       class Distance < Cop
-        # TODO: Implement the cop in here.
-        #
-        # In many cases, you can use a node matcher for matching node pattern.
-        # See https://github.com/rubocop-hq/rubocop/blob/master/lib/rubocop/node_pattern.rb
-        #
-        # For example
-        MSG = 'Use `#good_method` instead of `#bad_method`.'.freeze
+        MSG = 'Too far'
 
-        def_node_matcher :bad_method?, <<-PATTERN
-          (send nil? :bad_method ...)
-        PATTERN
+        def on_block(node)
+          return unless example_group_with_body?(node)
+          return unless describe?(node)
 
-        def on_send(node)
-          return unless bad_method?(node)
+          # TODO: 位置的に最後のitを探す
+          position = last_it_position(node.body)
+          # TODO: itから上に辿った場合にダメなletを探す
+          check_let_declarations(node.body)
+        end
 
-          add_offense(node)
+        private
+
+        def describe?(node)
+          [:context, :describe].include?(node.children.first.children[1])
+        end
+
+        def last_it_position(body)
+          require'pry';binding.pry
+        end
+
+        def check_let_declarations(body)
+          lets = body.each_child_node.select { |node| let?(node) }
+
+          return
+          ###
+          first_let = lets.first
+          lets.each_with_index do |node, idx|
+            next if node.sibling_index == first_let.sibling_index + idx
+
+            add_offense(node, location: :expression)
+          end
         end
       end
     end

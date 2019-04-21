@@ -23,14 +23,13 @@ RSpec.describe RuboCop::Cop::RSpec::Distance do
         let(:foo_9) { 1 }
         let(:foo_10) { 1 }
         let(:foo_11) { 1 }
-        describe "a describe" do
-          it { is_expected.to eq(1) }
-        end
+
+        it { is_expected.to eq(1) }
       end
     RUBY
   end
 
-  it 'does not register an offense when using `#good_method`' do
+  xit 'does not register an offense when using `#good_method`' do
     expect_no_offenses(<<-RUBY.strip_indent)
       describe Some::Class do
         describe "a describe" do
