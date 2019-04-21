@@ -39,16 +39,16 @@ module RuboCop
       #   good_foo_method(args)
       #
       class Distance < Cop
-        MSG = 'Too far'
+        MSG = 'Too far.'
 
         def on_block(node)
           return unless example_group_with_body?(node)
           return unless describe?(node)
 
-          # TODO: 位置的に最後のitを探す
-          position = last_it_position(node.body)
-          # TODO: itから上に辿った場合にダメなletを探す
-          check_let_declarations(node.body)
+          last_it = last_it(node.body)
+          return unless last_it
+          it_position = last_it_position(last_it)
+          check_let_declarations(body: node.body, it_position: it_position)
         end
 
         private
@@ -57,20 +57,26 @@ module RuboCop
           [:context, :describe].include?(node.children.first.children[1])
         end
 
-        def last_it_position(body)
-          require'pry';binding.pry
+        def it?(node)
+          [:it].include?(node.children.first.children[1])
         end
 
-        def check_let_declarations(body)
+        def last_it(body)
+          body.each_child_node.select { |node| it?(node) }.last
+        end
+
+        def last_it_position(block_node)
+          block_node.location.first_line
+        end
+
+        def check_let_declarations(body:, it_position:)
           lets = body.each_child_node.select { |node| let?(node) }
 
-          return
-          ###
-          first_let = lets.first
-          lets.each_with_index do |node, idx|
-            next if node.sibling_index == first_let.sibling_index + idx
-
-            add_offense(node, location: :expression)
+          lets.each do |let_node|
+            # require'pry';binding.pry
+            delta = it_position - let_node.location.first_line
+            next if delta <= 10
+            add_offense(let_node, location: :expression)
           end
         end
       end
