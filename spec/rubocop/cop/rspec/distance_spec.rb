@@ -12,11 +12,11 @@ RSpec.describe RuboCop::Cop::RSpec::Distance do
     expect_offense(<<-RUBY.strip_indent)
       describe Some::Class do
         let(:foo_1) { 1 }
-        ^^^^^^^^^^^^^^^^^ Too far.
+        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
         let(:foo_2) { 1 }
-        ^^^^^^^^^^^^^^^^^ Too far.
+        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
         let(:foo_3) { 1 }
-        ^^^^^^^^^^^^^^^^^ Too far.
+        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
         let(:foo_4) { 1 }
         let(:foo_5) { 1 }
         let(:foo_6) { 1 }

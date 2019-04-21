@@ -39,7 +39,7 @@ module RuboCop
       #   good_foo_method(args)
       #
       class Distance < Cop
-        MSG = 'Too far.'
+        MSG = 'Declaration is too far from example.'
 
         def on_block(node)
           return unless example_group_with_body?(node)
