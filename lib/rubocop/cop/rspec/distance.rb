@@ -58,7 +58,11 @@ module RuboCop
         end
 
         def it?(node)
-          [:it].include?(node.children.first.children[1])
+          return false if node.args_type?
+          return true if [:it].include?(node.children[1])
+          #require'pry';binding.pry if node.children.first.nil?
+          return false unless x = node.children.first
+          [:it].include?(x.children[1])
         end
 
         def last_it(body)
@@ -73,7 +77,6 @@ module RuboCop
           lets = body.each_child_node.select { |node| let?(node) }
 
           lets.each do |let_node|
-            # require'pry';binding.pry
             delta = it_position - let_node.location.first_line
             next if delta <= 10
             add_offense(let_node, location: :expression)
