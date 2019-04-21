@@ -41,6 +41,7 @@ RSpec.describe RuboCop::Cop::RSpec::Distance do
         let(:foo_4) { 1 }
         ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
         let(:foo_5) { 1 }
+        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
         let(:foo_6) { 1 }
         let(:foo_7) { 1 }
         let(:foo_8) { 1 }
@@ -49,8 +50,10 @@ RSpec.describe RuboCop::Cop::RSpec::Distance do
         let(:foo_11) { 1 }
         let(:foo_12) { 1 }
 
-        describe "a describe" do
-          it { is_expected.to eq(1) }
+        describe "a describe1" do
+          describe "a describe2" do
+            it { is_expected.to eq(1) }
+          end
         end
       end
     RUBY

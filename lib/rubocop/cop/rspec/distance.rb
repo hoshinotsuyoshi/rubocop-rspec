@@ -68,6 +68,8 @@ module RuboCop
           node.body.each_child_node.map do |node|
             if it?(node)
               node
+            elsif node.block_type?
+              last_it(node)
             end
           end.compact.last
         end
