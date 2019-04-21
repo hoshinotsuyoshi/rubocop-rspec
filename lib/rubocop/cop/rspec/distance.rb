@@ -45,7 +45,7 @@ module RuboCop
           return unless example_group_with_body?(node)
           return unless describe?(node)
 
-          last_it = last_it(node.body)
+          last_it = last_it(node)
           return unless last_it
           it_position = last_it_position(last_it)
           check_let_declarations(body: node.body, it_position: it_position)
@@ -60,13 +60,16 @@ module RuboCop
         def it?(node)
           return false if node.args_type?
           return true if [:it].include?(node.children[1])
-          #require'pry';binding.pry if node.children.first.nil?
           return false unless x = node.children.first
           [:it].include?(x.children[1])
         end
 
-        def last_it(body)
-          body.each_child_node.select { |node| it?(node) }.last
+        def last_it(node)
+          node.body.each_child_node.map do |node|
+            if it?(node)
+              node
+            end
+          end.compact.last
         end
 
         def last_it_position(block_node)
