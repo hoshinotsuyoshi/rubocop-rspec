@@ -61,10 +61,12 @@ module RuboCop
           return false if node.args_type?
           return true if [:it].include?(node.children[1])
           return false unless x = node.children.first
+          return false unless x.respond_to?(:children)
           [:it].include?(x.children[1])
         end
 
         def last_it(node)
+          return if node.body.nil?
           node.body.each_child_node.map do |node|
             if it?(node)
               node
