@@ -89,6 +89,11 @@ RSpec/Dialect:
   PreferredMethods: {}
   StyleGuide: http://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/Dialect
 
+RSpec/Distance:
+  Description: 'TODO: Write a description of the cop.'
+  Enabled: false
+  VersionAdded: '0.68'
+
 RSpec/EmptyExampleGroup:
   Description: Checks if an example group does not include any tests.
   Enabled: true
