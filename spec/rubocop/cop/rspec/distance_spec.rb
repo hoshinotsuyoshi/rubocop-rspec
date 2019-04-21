@@ -9,11 +9,11 @@ RSpec.describe RuboCop::Cop::RSpec::Distance do
     expect_offense(<<-RUBY.strip_indent)
       describe Some::Class do
         let(:foo_1) { 1 }
-        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
+        ^^^^^^^^^^^^^^^^^ Declaration position is too far from example.
         let(:foo_2) { 1 }
-        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
+        ^^^^^^^^^^^^^^^^^ Declaration position is too far from example.
         let(:foo_3) { 1 }
-        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
+        ^^^^^^^^^^^^^^^^^ Declaration position is too far from example.
         let(:foo_4) { 1 }
         let(:foo_5) { 1 }
         let(:foo_6) { 1 }
@@ -33,15 +33,15 @@ RSpec.describe RuboCop::Cop::RSpec::Distance do
     expect_offense(<<-RUBY.strip_indent)
       describe Some::Class do
         let(:foo_1) { 1 }
-        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
+        ^^^^^^^^^^^^^^^^^ Declaration position is too far from example.
         let(:foo_2) { 1 }
-        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
+        ^^^^^^^^^^^^^^^^^ Declaration position is too far from example.
         let(:foo_3) { 1 }
-        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
+        ^^^^^^^^^^^^^^^^^ Declaration position is too far from example.
         let(:foo_4) { 1 }
-        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
+        ^^^^^^^^^^^^^^^^^ Declaration position is too far from example.
         let(:foo_5) { 1 }
-        ^^^^^^^^^^^^^^^^^ Declaration is too far from example.
+        ^^^^^^^^^^^^^^^^^ Declaration position is too far from example.
         let(:foo_6) { 1 }
         let(:foo_7) { 1 }
         let(:foo_8) { 1 }
